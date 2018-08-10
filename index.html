@@ -748,7 +748,7 @@ $(document).ready(function(){
 			$("#carte").html("");
 			$("#msg2").html("");
 			for (i=0;i<13;i++){
-				$("#carte").append("<a id='" + mano[i].seme + "," + mano[i].valore + "' href='javascript:clickcard(" +  mano[i].seme + "," + mano[i].valore + ");' style='position: fixed; left: 0; margin-left:" + (window.innerWidth*(26-mano.length+2*i)/50 - 40) + "px'><img class='card' src='carte/[" + mano[i].seme + ", " + mano[i].valore + "].png' width='79' height='123' ></a>");
+				$("#carte").append("<a id='" + mano[i].seme + "," + mano[i].valore + "' href='javascript:clickcard(" +  mano[i].seme + "," + mano[i].valore + ");' style='position: fixed; left: 0; margin-left:" + (window.innerWidth*(26-mano.length+2*i)/50 - 40) + "px'><img class='card' src='img/carte/[" + mano[i].seme + ", " + mano[i].valore + "].png' width='79' height='123' ></a>");
 			}
 			if (pass % 4 == 1){
 				fase = "pass";
@@ -797,7 +797,7 @@ $(document).ready(function(){
 						op = " margin-top: -30px";
 					}
 				}
-				str = "<a id='" + mano[i].seme + "," + mano[i].valore + "' href='javascript:clickcard(" +  mano[i].seme + "," + mano[i].valore + ");' style='position: fixed; left:" + (window.innerWidth*(26-mano.length+2*i)/50 - 40) + "px;" + op + "'><img class='card' src='carte/[" + mano[i].seme + ", " + mano[i].valore + "].png' width='79' height='123' ></a>";
+				str = "<a id='" + mano[i].seme + "," + mano[i].valore + "' href='javascript:clickcard(" +  mano[i].seme + "," + mano[i].valore + ");' style='position: fixed; left:" + (window.innerWidth*(26-mano.length+2*i)/50 - 40) + "px;" + op + "'><img class='card' src='img/carte/[" + mano[i].seme + ", " + mano[i].valore + "].png' width='79' height='123' ></a>";
 				$("#carte").append(str);
 			}
     		document.getElementById("viste").style.display = "block";
@@ -816,15 +816,15 @@ $(document).ready(function(){
 			if (tavolo.length == 0){
 				primo = ind;
 			}
-			str = "<img id='ovestcard' src='carte/[" + msg.seme + ", " + msg.valore + "].png'>";
+			str = "<img id='ovestcard' src='img/carte/[" + msg.seme + ", " + msg.valore + "].png'>";
 			if (ind == (mioind + 1) % 4){
-				$("#ovest").html("<img id='ovestcard' src='carte/[" + msg.seme + ", " + msg.valore + "].png'>");
+				$("#ovest").html("<img id='ovestcard' src='img/carte/[" + msg.seme + ", " + msg.valore + "].png'>");
 				ultimaux[0] = str;
 			}else if (ind == (mioind + 2) % 4){
-				$("#nord").html("<img id='nordcard' src='carte/[" + msg.seme + ", " + msg.valore + "].png'>");
+				$("#nord").html("<img id='nordcard' src='img/carte/[" + msg.seme + ", " + msg.valore + "].png'>");
 				ultimaux[1] = str;
 			}else if (ind == (mioind + 3) % 4){
-				$("#est").html("<img id='estcard' src='carte/[" + msg.seme + ", " + msg.valore + "].png'>");
+				$("#est").html("<img id='estcard' src='img/carte/[" + msg.seme + ", " + msg.valore + "].png'>");
 				ultimaux[2] = str;
 				if (tavolo.length < 3){
 					tocca = true;
@@ -832,7 +832,7 @@ $(document).ready(function(){
 			}else{
 				div = document.getElementById(msg.seme + "," + msg.valore);
 				div.parentNode.removeChild(div);
-				$("#sud").html("<img id='sudcard' src='carte/[" + msg.seme + ", " + msg.valore + "].png'>");
+				$("#sud").html("<img id='sudcard' src='img/carte/[" + msg.seme + ", " + msg.valore + "].png'>");
 				ultimaux[3] = str;
 				for (i=0;i<mano.length;i++){
 					if (mano[i].seme == msg.seme && mano[i].valore == msg.valore){
