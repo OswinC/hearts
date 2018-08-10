@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "author": "lellolandi <lellolandi@gmail.com>",
   "dependencies": {
-    "ws": "*",
     "express": "*",
-    "mysql": "*"
+    "mysql": "^2.16.0",
+    "ws": "*"
   },
   "keywords": [
     "OpenShift",
