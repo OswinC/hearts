@@ -27,7 +27,10 @@ var fs      = require('fs');
 var host = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 var mysqlhost = process.env.OPENSHIFT_MYSQL_DB_HOST || "localhost";
-var mysqlport = process.env.OPENSHIFT_MYSQL_DB_PORT;
+var mysqlport = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
+// Current mysql node client (2.16.0) doesn't support the new auth mode in mysql 8
+// Workaround-
+// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxx';
 var user = process.env.OPENSHIFT_MYSQL_DB_USERNAME;
 var password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD;
 
@@ -79,33 +82,32 @@ function dai_carte(){
 };
 
 WebSocketServer = require('ws').Server;
-console.log('starting');
+console.log('starting websocket server...');
 var wss = new WebSocketServer({host:host, port:port});
-console.log('starting.');
 var newmysql = require('mysql');
-console.log('starting..');
 var mysql = newmysql.createConnection({
 	host: mysqlhost,
 	port: mysqlport,
 	user: user,
 	password : password,
 });
-console.log('starting...');
+console.log('connecting mysql...');
 mysql.connect();
-console.log('starting....');
+console.log('using hearts...');
 mysql.query("use hearts", function(err,rows,fields){
 	if (err != null){
+        console.log('creating hearts db...');
 		mysql.query("create database hearts");
 		mysql.query("use hearts");
 		mysql.query("create table users (id int not null auto_increment primary key, username text, password text, online int default 0, tavolo int default 0, ammonito int default 0) engine = innodb");
 		mysql.query("create table tables (id int, pl1 text, pl2 text, pl3 text, pl4 text) engine = innodb");
 		mysql.query("create table stats (nome text, giocate int default 0, vinte int default 0, perse int default 0, perc decimal(10,1) default 0) engine = innodb");
+        console.log('done');
 	}
 });
 var connections = [];
 var players = [];
 var atb = new Array();
-console.log('starting.....');
 
 function sendToAll(mess){
 	for (i=0;i<connections.length;i++){
@@ -142,6 +144,9 @@ wss.on('connection', function(connection) {
 		msg = JSON.parse(message);
 		if (msg.userreg != undefined){
 			mysql.query("select * from users where username = '" + msg.userreg + "'", function(err,rows,fields) {
+                if (err) {
+                    console.log(err);
+                }
 				if (rows.length > 0){
 					connection.send(JSON.stringify({userregerror:1}));
 				}else{
@@ -521,4 +526,5 @@ var SampleApp = function() {
  */
 var zapp = new SampleApp();
 zapp.initialize();
+console.log('starting the app...');
 zapp.start();
