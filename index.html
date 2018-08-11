@@ -27,11 +27,7 @@
 
 // variabili di login //
 
-if(window.location.hostname == 'localhost'){
-  var socket_addr = "ws://localhost:8000/"
-}else{
-  var socket_addr = "ws://"+windlow.location.hostname+":8000/";
-}
+var socket_addr = "ws://"+window.location.hostname+":8000/";
 var socket = new WebSocket(socket_addr);
 
 var userreg = "";

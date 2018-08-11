@@ -24,15 +24,15 @@ var fs      = require('fs');
 //var mysqluser = "root";
 //var mysqlpasswd = "pippo";
 
-var host = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
-var mysqlhost = process.env.OPENSHIFT_MYSQL_DB_HOST || "localhost";
-var mysqlport = process.env.OPENSHIFT_MYSQL_DB_PORT || 3306;
+var wshost = process.env.OPENHEARTS_WS_IP || 'localhost';
+var wsport = process.env.OPENHEARTS_WS_PORT;
+var mysqlhost = process.env.OPENHEARTS_MYSQL_DB_HOST || "localhost";
+var mysqlport = process.env.OPENHEARTS_MYSQL_DB_PORT;
 // Current mysql node client (2.16.0) doesn't support the new auth mode in mysql 8
 // Workaround-
 // ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'xxx';
-var user = process.env.OPENSHIFT_MYSQL_DB_USERNAME;
-var password = process.env.OPENSHIFT_MYSQL_DB_PASSWORD;
+var user = process.env.OPENHEARTS_MYSQL_DB_USERNAME;
+var password = process.env.OPENHEARTS_MYSQL_DB_PASSWORD;
 
 
 function shuffle(o){
@@ -83,7 +83,7 @@ function dai_carte(){
 
 WebSocketServer = require('ws').Server;
 console.log('starting websocket server...');
-var wss = new WebSocketServer({host:host, port:port});
+var wss = new WebSocketServer({host:wshost, port:wsport});
 var newmysql = require('mysql');
 var mysql = newmysql.createConnection({
 	host: mysqlhost,
@@ -365,13 +365,13 @@ var SampleApp = function() {
      */
     self.setupVariables = function() {
         //  Set the environment variables we need.
-        self.ipaddress = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP;
-        self.port      = process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+        self.ipaddress = process.env.OPENHEARTS_HTTP_IP || process.env.OPENHEARTS_WS_IP;
+        self.port      = process.env.OPENHEARTS_HTTP_PORT || 8080;
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
-            console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
+            console.warn('No OPENHEARTS_WS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
     };
