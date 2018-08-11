@@ -25,7 +25,7 @@ export OPENHEARTS_MYSQL_DB_HOST=localhost
 export OPENHEARTS_MYSQL_DB_PORT=3306
 export OPENHEARTS_MYSQL_DB_USERNAME=user
 export OPENHEARTS_MYSQL_DB_PASSWORD=pw
-<pre>
+</pre>
 Note: Set owner-only permission to the config file as it contains sensitive information
 
 <h3>Run:</h3>
