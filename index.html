@@ -41,7 +41,7 @@ var idtable = 0;
 
 // variabili di gioco //
 
-var fase = "pass";
+var fase = "wait";
 var pass = 0;
 var mano = [];
 var passate = [];
@@ -392,7 +392,7 @@ function refresh(){
 	iCreate = false;
 	intable = 0;
 	idtable = 0;
-	fase = "pass";
+	fase = "wait";
 	pass = 0;
 	mano = [];
 	passate = [];
@@ -712,7 +712,7 @@ $(document).ready(function(){
 			document.getElementById("enter").style.display = "none";
 			document.getElementById("main").style.display = "block";
 			document.getElementById("carte").style.display = "block";
-			document.getElementById("viste").style.display = "none";
+    		document.getElementById("viste").style.display = "block";
 			document.getElementById("closebutton").style.display = "none";
 			document.getElementById("ok").style.display = "none";
 			document.getElementById("nordriv").style.display = "none";
@@ -739,7 +739,9 @@ $(document).ready(function(){
 			$("#scores").html("");
 			$("#scores").append("<tr><td>" + players[0] + "  </td><td>" + players[1] + "  </td><td>" + players[2] + "  </td><td>" + players[3] + "</td></tr>" );
 		}else if (msg.carte != undefined){
-			pass++;
+			<!--pass++;-->
+            <!-- no pass phase -->
+            pass = 0;
 			mano = msg.carte;
 			$("#carte").html("");
 			$("#msg2").html("");
@@ -1021,7 +1023,7 @@ $(document).ready(function(){
     		document.getElementById("sudname").style.display = "none";
     		document.getElementById("carte").style.display = "none";
     		document.getElementById("passa").style.display = "none";
-    		document.getElementById("viste").style.display = "none";
+    		document.getElementById("viste").style.display = "block";
 			document.getElementById("closebutton").style.display = "block";
 			qualcunouscito = true;
 		}
@@ -1107,7 +1109,7 @@ $(document).ready(function(){
 
 		<table id="scores"></table>
 
-		<button id="passa" class="button"></button>
+		<button id="passa" class="button" style="display: none;"></button>
 		<button id="viste" class="button">ok!</button>
 		<button id="closebutton" class="button">Esci</button>
 
