@@ -43,13 +43,13 @@ var idtable = 0;
 
 var fase = "wait";
 var pass = 0;
+// hand
 var mano = [];
 var passate = [];
 var ricevute = [];
 var tavolo = [];
 var tocca = false;
 var toccaux = false;
-var broken = false;
 var primo = -1;
 var giocate = 0;
 var partials = [0,0,0,0];
@@ -324,12 +324,12 @@ function clickcard(a,b){
 			document.getElementById("passa").style.border = "none";
 			document.getElementById("passa").disabled = true;
 		}
-	}else if (fase == "turno" && tocca && legal(a,b,tavolo,mano,broken)){
+	}else if (fase == "turno" && tocca && legal(a,b,tavolo,mano)){
 		socket.send(JSON.stringify({nome:name, seme:a, valore:b, id:idtable}));
 	}
 }
 
-function legal(a,b,tavolo,mano,broken){
+function legal(a,b,tavolo,mano){
 	if (a == 1 && b == 2){
 		return true;
 	}else if (tavolo.length > 0 && a == tavolo[0].seme){
@@ -356,20 +356,9 @@ function legal(a,b,tavolo,mano,broken){
 		if (s == 0){
 			return true;
 		}
-	}else if (tavolo.length == 0 && broken){
+	}else if (tavolo.length == 0 && (a != 1 || b != 2) && (mano[0].seme != 1 || mano[0].valore != 2)){
 		return true;
-	}else if (tavolo.length == 0 && !broken && a == 4){
-		c = 1;
-		for (i=0;i<mano.length;i++){
-			if (mano[i].seme != 4){
-				c = 0;
-				break;
-			}
-		}
-		if (c == 1){
-			return true;
-		}
-	}else if (tavolo.length == 0 && !broken && (a != 1 || b != 2) && (mano[0].seme != 1 || mano[0].valore != 2)){
+	}else if (tavolo.length == 0){
 		return true;
 	}else{
 		return false;
@@ -400,7 +389,6 @@ function refresh(){
 	tavolo = [];
 	tocca = false;
 	toccaux = false;
-	broken = false;
 	qualcunouscito = false;
 	primo = -1;
 	giocate = 0;
@@ -861,7 +849,6 @@ $(document).ready(function(){
 				pts = 0;
 				for (i=0;i<4;i++){
 					if (tavolo[i].seme == 4){
-						broken = true;
 						pts++;
 					}else if (tavolo[i].seme == 2 && tavolo[i].valore == 12){
 						pts = pts + 13;
@@ -984,7 +971,6 @@ $(document).ready(function(){
 							$("#scores").append("<tr><td id='r" + pass + "'><img src='themes/" + actualtheme + "/riga.png' style='width:400%; height:1px; margin-bottom:20px' ></td></tr>");
 						}
 						giocate = 0;
-						broken = false;
 						partials = [0,0,0,0];
 						socket.send(JSON.stringify({ready:0, id:idtable}));
 					}
@@ -994,7 +980,6 @@ $(document).ready(function(){
 					}
 					giocate = 0;
 					ultimamano = [];
-					broken = false;
 					partials = [0,0,0,0];
 					socket.send(JSON.stringify({ready:0, id:idtable}));
 				}
