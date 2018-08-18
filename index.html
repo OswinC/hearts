@@ -576,12 +576,12 @@ $(document).ready(function(){
 	$("#passa").click(function(){
 		socket.send(JSON.stringify({nome:name, passate:passate, id:idtable}));
 		document.getElementById("passa").style.display = "none";
-		$("#msg2").html("Attendi...<br>");
+		$("#msg2").html("Waiting...<br>");
 		fase = "wait";
 	});
 	$("#viste").click(function(){
 		document.getElementById("viste").style.display = "none";
-		$("#msg2").html("Attendi...<br>");
+		$("#msg2").html("Waiting...<br>");
 		socket.send(JSON.stringify({viste:1, id:idtable}));
 		passate = [];
 		ricevute = [];
@@ -624,7 +624,7 @@ $(document).ready(function(){
 						div = document.getElementById("bt" + tableids[i]);
 						par = div.parentNode;
 						par.removeChild(div);
-						par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Entra</td>";
+						par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Enter</td>";
 					}
 					document.getElementById("newtable").style.display = "block";
 				}
@@ -657,7 +657,7 @@ $(document).ready(function(){
 				$("#onlines").html(onlinestring);
 				for (i=0;i<msg.tavoli.length;i++){
 					tableids.push(msg.tavoli[i].id);
-					$("#tavolist").append("<tr id=" + msg.tavoli[i].id + "><td class='ttd' id='p" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl1 + "</td><td class='ttd' id='s" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl2 + "</td><td class='ttd' id='t" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl3 + "</td><td class='ttd' id='q" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl4 + "</td><td class='btd' id='bt" + msg.tavoli[i].id + "' onclick='javascript:inTable(" + msg.tavoli[i].id + ")'>Entra</td></tr>");
+					$("#tavolist").append("<tr id=" + msg.tavoli[i].id + "><td class='ttd' id='p" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl1 + "</td><td class='ttd' id='s" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl2 + "</td><td class='ttd' id='t" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl3 + "</td><td class='ttd' id='q" + msg.tavoli[i].id + "'>" + msg.tavoli[i].pl4 + "</td><td class='btd' id='bt" + msg.tavoli[i].id + "' onclick='javascript:inTable(" + msg.tavoli[i].id + ")'>Enter</td></tr>");
 				}
 				if (tableids.length == 0){
 					document.getElementById("tavolistfirst").style.display = "none";
@@ -670,14 +670,14 @@ $(document).ready(function(){
 			$("#onlines").html(onlinestring);
 		}else if (msg.newtable != undefined){
 			if (msg.newtable != name && !iCreate && intable == 0){
-				str = " onclick='javascript:inTable(" + msg.id + ")'>Entra";
+				str = " onclick='javascript:inTable(" + msg.id + ")'>Enter";
 			}else if (msg.newtable == name){
 				iCreate = true;
 				intable = msg.id;
 				for (i=0;i<tableids.length;i++){
 					document.getElementById("bt" + tableids[i]).style.display = "none";
 				}
-				str = " onclick='javascript:destroyTable(" + msg.id + ")'>Chiudi";
+				str = " onclick='javascript:destroyTable(" + msg.id + ")'>Close";
 			}else{
 				str = " style='display:none'>";
 			}
@@ -717,7 +717,7 @@ $(document).ready(function(){
 					div = document.getElementById("bt" + tableids[i]);
 					par = div.parentNode;
 					par.removeChild(div);
-					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Entra</td>";
+					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Enter</td>";
 				}
 				document.getElementById("newtable").style.display = "block";
 			}
@@ -734,7 +734,7 @@ $(document).ready(function(){
 					div = document.getElementById("bt" + tableids[i]);
 					par = div.parentNode;
 					par.removeChild(div);
-					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Entra</td>";
+					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Enter</td>";
 				}
 				document.getElementById("newtable").style.display = "block";
 			}else if (document.getElementById("s" + msg.destroytable).innerHTML == name || document.getElementById("t" + msg.destroytable).innerHTML == name){
@@ -743,7 +743,7 @@ $(document).ready(function(){
 					div = document.getElementById("bt" + tableids[i]);
 					par = div.parentNode;
 					par.removeChild(div);
-					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Entra</td>";
+					par.innerHTML += "<td class='btd' id='bt" + tableids[i] + "' onclick='javascript:inTable(" + tableids[i] + ")'>Enter</td>";
 				}
 				document.getElementById("newtable").style.display = "block";
 			}
@@ -1012,9 +1012,9 @@ $(document).ready(function(){
     		}
     	}else if (msg.vinto != undefined){
     		if (msg.vinto == name){
-    			$("#msg2").html("Hai vinto!<br>");
+    			$("#msg2").html("You win!<br>");
     		}else{
-    			$("#msg2").html(msg.vinto + " vince!<br>");
+    			$("#msg2").html(msg.vinto + " wins!<br>");
     		}
     		document.getElementById("estname").style.display = "none";
     		document.getElementById("ovestname").style.display = "none";
@@ -1066,7 +1066,7 @@ $(document).ready(function(){
 	
 	<div id="enter">
 		<table id="leftcolumn">
-			<tr><td class="ltd" id="tavoli" onclick="javascript:show('tavoli')">Tavoli</td></tr>
+			<tr><td class="ltd" id="tavoli" onclick="javascript:show('tavoli')">Tables</td></tr>
 			<tr><td class="ltd" id="statistiche" onclick="javascript:show('statistiche')">Statistiche</td></tr>
 			<tr><td class="ltd" id="profilo" onclick="javascript:show('profilo')">Profilo</td></tr>
 			<tr><td class="ltd" id="regole" onclick="javascript:show('regole')">Regole</td></tr>
@@ -1074,16 +1074,16 @@ $(document).ready(function(){
 		</table>
 	
 		<div id="onlineside">
-			<a>Giocatori disponibili:</a><br>
+			<a>Available players:</a><br>
 			<a id="onlines"></a>
 		</div>
 	
 		<div id="tavoliframe">
 			<table id="tavolistfirst">
-				<tr><td class="ptd">Giocatore 1</td><td class="ptd">Giocatore 2</td><td class="ptd">Giocatore 3</td><td class="ptd">Giocatore 4</td><td class="ptd" style="border-bottom: 0"></td></tr>
+				<tr><td class="ptd">Player 1</td><td class="ptd">Player 2</td><td class="ptd">Player 3</td><td class="ptd">Player 4</td><td class="ptd" style="border-bottom: 0"></td></tr>
 			</table>
 			<table id="tavolist"></table>
-			<p id="newtable" onclick="newTable()" style="margin-top:20px">Crea un nuovo tavolo</p>
+			<p id="newtable" onclick="newTable()" style="margin-top:20px">Create a table</p>
 		</div>
 		
 		<div id="statsframe">
