@@ -19,11 +19,62 @@
 <html>
 
 <head>
-<title>Hearts!</title>
+<title>Gong Zhu</title>
 <link rel="shortcut icon" href="img/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="js/jquery.min.js" ></script>
 <script type="text/javascript">
+
+class Pile {
+  constructor() {
+    this.hearts = [];
+    this.spadeQ = false;
+    this.diamondJ = false;
+    this.club10 = false;
+    this.pts = 0;
+  }
+
+  // suit code- 1: club, 2: spade, 3: diamond, 4: heart
+  collect(suit, value) {
+    if (suit == 4) {
+      this.hearts.push(value);
+      if (value == 4) {
+        this.pts -= 10;
+      } else if (value >= 11) {
+        this.pts -= 10 * (value - 10 + 1);
+      } else {
+        this.pts -= value;
+      }
+    } else if (suit == 2 && value == 12) {
+      this.spadeQ = true;
+      this.pts -= 100;
+    } else if (suit == 3 && value == 11) {
+      this.diamondJ = true;
+      this.pts += 100;
+    } else if (suit == 1 && value == 10) {
+      this.club10 = true;
+    }
+  }
+
+  get moonShot() {
+    return this.hearts.length == 13;
+  }
+
+  calcPoints(moonShot = false) {
+    var pts = this.pts;
+    if (moonShot) {
+      pts *= -1;
+    }
+    if (this.club10) {
+      if (this.pts == 0) {
+        pts += 50;
+      } else {
+        pts *= 2;
+      }
+    }
+    return pts;
+  }
+}
 
 // variabili di login //
 
